@@ -35,15 +35,40 @@ app.get('/artist-search', (request, response) => {
     spotifyApi
       .searchArtists(`${term}`)
       .then(data => {
-        console.log('The received data from the API: ', data.body);
+        // console.log('The received data from the API: ', data.body);
             // ----> 'HERE WHAT WE WANT TO DO AFTER RECEIVING THE DATA FROM THE API'
             const dataArtist = data.body.artists.items;
-            console.log('The received data from the API - artists: ', dataArtist);
-            console.log('The received data from the API - image: ', data.body.artists.items[0].images);
+            // console.log('The received data from the API - artists: ', dataArtist);
+            // console.log('The received data from the API - image: ', data.body.artists.items[0].images);
         response.render('artist-search-results', { dataArtist });
       })
       .catch(err => console.log('The error while searching artists occurred: ', err));
   });
 
+app.get('/albums/:id', (request, response) => {
+    const id = request.params.id;
+    console.log('Artist albums', {id})
+    spotifyApi
+      .getArtistAlbums(id)
+      .then(data => {
+          const album = data.body;
+        console.log('Artist albums', data.body);
+            // ----> 'HERE WHAT WE WANT TO DO AFTER RECEIVING THE DATA FROM THE API'
+        response.render('artist-search-results', { album });
+      })
+      .catch(err => console.log('The error while searching albuns occurred: ', err));
+  });
+
+
+//   spotifyApi
+//   .getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
+//   .then(
+//     function(data) {
+//       console.log('Artist albums', data.body);
+//     },
+//     function(err) {
+//       console.error(err);
+//     }
+//   );
 
 app.listen(3000, () => console.log('My Spotify project running on port 3000 🎧 🥁 🎸 🔊'));
