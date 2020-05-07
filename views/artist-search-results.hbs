@@ -1,0 +1,10 @@
+<h2>Search Results</h2>
+    {{#each dataArtist}}
+            {{#each images}}
+                {{#if @first}}
+                    <img src="{{ url }}" alt="image" />
+                {{/if}}
+            {{/each}}
+            <h3> {{ name }} </h3>
+    {{/each}}
+    
